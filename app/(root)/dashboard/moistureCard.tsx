@@ -6,6 +6,25 @@ import { Droplet } from "lucide-react";
 function SoilMoistureCard() {
   const [moisture, setMoisture] = useState<number | null>(null);
   const [timestamp, setTimestamp] = useState<string | null>(null);
+  const [language, setLanguage] = useState<"en" | "mr">("en"); // Default: English
+
+  // Define translations within the component
+  const translations = {
+    en: {
+      soilMoisture: "Soil Moisture",
+      loading: "Loading...",
+      optimalRange: "Optimal range: 60-75%",
+      lastUpdated: "Last updated:",
+      toggleButton: "मराठी"
+    },
+    mr: {
+      soilMoisture: "मातीतील आर्द्रता",
+      loading: "लोड होत आहे...",
+      optimalRange: "सर्वोत्तम श्रेणी: ६०-७५%",
+      lastUpdated: "शेवटचे अद्यतन:",
+      toggleButton: "English"
+    }
+  };
 
   useEffect(() => {
     async function fetchMoisture() {
@@ -29,14 +48,22 @@ function SoilMoistureCard() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">Soil Moisture</CardTitle>
+        <CardTitle className="text-sm font-medium">{translations[language].soilMoisture}</CardTitle>
         <Droplet className="h-4 w-4 text-blue-500" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{moisture !== null ? `${moisture}%` : "Loading..."}</div>
+        <div className="text-2xl font-bold">{moisture !== null ? `${moisture}%` : translations[language].loading}</div>
         <Progress value={moisture || 0} className="h-2 mt-2" />
-        <p className="text-xs text-muted-foreground mt-2">Optimal range: 60-75%</p>
-        {timestamp && <p className="text-xs text-gray-500 mt-1">Last updated: {timestamp}</p>}
+        <p className="text-xs text-muted-foreground mt-2">{translations[language].optimalRange}</p>
+        {timestamp && <p className="text-xs text-gray-500 mt-1">{translations[language].lastUpdated} {timestamp}</p>}
+
+        {/* Language Toggle Button */}
+        {/* <button 
+          className="mt-3 px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-md"
+          onClick={() => setLanguage(language === "en" ? "mr" : "en")}
+        >
+          {translations[language].toggleButton}
+        </button> */}
       </CardContent>
     </Card>
   );
