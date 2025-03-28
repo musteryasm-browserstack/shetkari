@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react";
 // importing from next
 import { useTheme } from "next-themes";
 
@@ -13,7 +14,14 @@ import {
 import { Moon, Sun } from "lucide-react";
 
 export function ModeToggle() {
-    const { theme, setTheme } = useTheme()
+    const { theme, setTheme } = useTheme();
+
+    useEffect(() => {
+        // Set the default theme to light on initial load
+        if (!theme) {
+            setTheme("light");
+        }
+    }, [theme, setTheme]);
 
     return (
         <ToggleGroup type="single" value={theme}>

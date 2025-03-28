@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 // import { AvatarDropdown } from "./avatar-dropdown";
 import { GoBack } from "./go-back";
 import { REDIRECT_WHEN_JWT_EXPIRED } from "@/lib/constants";
+import { ModeToggle } from "./toggle-theme";
 // import { getSession } from "@/lib/authentication";
 // import { redirect } from "next/navigation";
 
@@ -53,11 +54,15 @@ export async function Navbar() {
                     avatarEmail={session.user.username}
                     avatarImage={""}
                 /> */}
-                <Button>
-                    <Link href={"/login"}>
-                        Farmer Login
-                    </Link>
-                </Button>
+                <div className="flex gap-4">
+                    <ModeToggle />
+
+                    <Button>
+                        <Link href={"/login"}>
+                            Farmer Login
+                        </Link>
+                    </Button>
+                </div>
             </nav>
         </>
     );

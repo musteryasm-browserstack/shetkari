@@ -22,7 +22,7 @@ export function GoBack() {
                     router.back();
                 }}
             >
-                <ChevronLeft className="text-destructive" strokeWidth={3} />
+                <ChevronLeft className="text-primary" strokeWidth={3} />
             </Button>
 
         </>
