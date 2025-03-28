@@ -54,11 +54,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
-<<<<<<< HEAD
     "roboflow": "^0.0.2",
-=======
-    "roboflow": "^0.2.0",
->>>>>>> 2df817809f5364bab6c4e86647cf852947e8ccd6
     "sonner": "^2.0.1",
     "tailwind-merge": "^3.0.2",
     "three": "^0.174.0",
