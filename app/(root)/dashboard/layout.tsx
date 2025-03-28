@@ -15,7 +15,7 @@ export default function RootLayout({
             <RealtimeDataFetcher />
             <SidebarProvider>
                 <AppSidebar />
-                <div className="w-full max-h-screen overflow-y-scroll">
+                <div className="w-full max-h-screen overflow-y-scroll pb-10 sm:pb-0">
                     {children}
                 </div>
                 <Footer />
