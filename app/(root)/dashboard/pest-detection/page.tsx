@@ -111,14 +111,20 @@ export default function PestDetection() {
                                 </TabsList>
                             </div>
 
-                            <TabsContent value="upload" className="space-y-4">
-                                <ImageUploadAnalysis
-                                    onAnalysisComplete={(result) => {
-                                        console.log("Analysis complete:", result);
-                                        // You can handle the result here (save to state, send to API, etc.)
-                                    }}
-                                />
-                            </TabsContent>
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Embedded UI</CardTitle>
+                                    <CardDescription>Interacting with the local application</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="w-full h-[600px] border rounded-lg overflow-hidden">
+                                        <iframe
+                                            src="https://dc08-152-52-34-131.ngrok-free.app"
+                                            className="w-full h-full"
+                                        />
+                                    </div>
+                                </CardContent>
+                            </Card>
 
                             <TabsContent value="regional" className="space-y-4">
                                 <div className="flex flex-col gap-6">
