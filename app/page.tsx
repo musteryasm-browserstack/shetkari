@@ -42,7 +42,7 @@ export default async function page() {
 
                 <div className="flex justify-center gap-2 py-4">
                     <Button asChild>
-                        <Link href={"/sign-up"}>
+                        <Link href={"/login"}>
                             Get Started
                         </Link>
                     </Button>
