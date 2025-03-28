@@ -37,7 +37,7 @@ export default async function page() {
                     className="mx-auto h-fit"
                 />
                 <h1 className="text-xl font-semibold text-center">
-                    Aab Farmer bhi karega Work-From-Home
+                    Ab Farmer bhi karega Work-From-Home
                 </h1>
 
                 <div className="flex justify-center gap-2 py-4">
