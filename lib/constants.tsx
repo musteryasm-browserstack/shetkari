@@ -18,20 +18,56 @@ export const REDIRECT_WHEN_JWT_EXPIRED = "/";
 export const REDIRECT_WHEN_JWT_EXISTS = "/tasks";
 export const APP_SIDEBAR_PARENT_LINK = "/";
 
-// export const LINKS = [
-//     {
-//         name: "Home",
-//         href: "/home",
-//         icon: <Home />,
-//     },
-//     {
-//         name: "Tasks",
-//         href: "/tasks",
-//         icon: <ListCheck />,
-//     },
-//     {
-//         name: "Profile",
-//         href: "/profile",
-//         icon: <User />,
-//     }
-// ];
+import {
+    Layers,
+    ShieldAlert,
+    FileStack,
+    Droplet,
+    CloudRain,
+    TrendingUp,
+    Cloud,
+    Activity,
+} from "lucide-react";
+
+export const SIDEBAR_LINKS = [
+    {
+        title: "Dashboard",
+        url: "/dashboard",
+        icon: Activity,
+    },
+    {
+        title: "Farm Overview",
+        url: "/dashboard/farm-overview",
+        icon: Layers,
+    },
+    {
+        title: "Pest & Disease",
+        url: "/dashboard/pest-detection",
+        icon: ShieldAlert,
+    },
+    {
+        title: "Soil Monitoring",
+        url: "/dashboard/soil-monitoring",
+        icon: FileStack,
+    },
+    {
+        title: "Smart Irrigation",
+        url: "/dashboard/irrigation",
+        icon: Droplet,
+    },
+    {
+        title: "Weather Advisory",
+        url: "/dashboard/weather",
+        icon: CloudRain,
+    },
+    {
+        title: "Yield Prediction",
+        url: "/dashboard/yield-prediction",
+        icon: TrendingUp,
+    },
+    {
+        title: "Climate Risk",
+        url: "/dashboard/climate-risk",
+        icon: Cloud,
+    },
+];

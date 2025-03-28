@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label"
 import { ManualPumpControl } from "./control"
 import axios from "axios"
 import { toast } from "sonner"
+import { BACKEND_URL } from "@/lib/constants"
 
 // Sample irrigation zones data
 const irrigationZones = [
@@ -140,7 +141,7 @@ export default function IrrigationSystem() {
         setIsManualIrrigating(true);
 
         // Simulate irrigation process
-        const response = await axios.put(`http://localhost:3000/api/update-pump`, {
+        const response = await axios.put(`${BACKEND_URL}/api/update-pump`, {
             pump: waterSpeed
         });
         if (response.data.status === "success") {

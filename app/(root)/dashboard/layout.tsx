@@ -3,6 +3,7 @@ import {
     SidebarProvider,
 } from "@/components/ui/sidebar"
 import { RealtimeDataFetcher } from "@/components/firebase/RealtimeDataFetcher";
+import { Footer } from "@/components/footer/footer";
 
 export default function RootLayout({
     children,
@@ -17,6 +18,7 @@ export default function RootLayout({
                 <div className="w-full max-h-screen overflow-y-scroll">
                     {children}
                 </div>
+                <Footer />
             </SidebarProvider>
         </div>
     );

@@ -5,14 +5,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 // importing shadnc components
-import { Button } from "../ui/button";
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog";
 
 // importing constants
@@ -74,9 +72,6 @@ export function RealtimeDataFetcher() {
         <>
             {alert && (
                 <Dialog open={open} onOpenChange={setOpen}>
-                    <DialogTrigger asChild>
-                        <Button variant="outline">Edit Profile</Button>
-                    </DialogTrigger>
                     <DialogContent className={`sm:max-w-[425px] ${alert.alertType === "alert" ? "border-destructive text-destructive" : "bg-yellow-100"}`}>
                         <DialogHeader>
                             <DialogTitle>{alert.alertTitle}</DialogTitle>
