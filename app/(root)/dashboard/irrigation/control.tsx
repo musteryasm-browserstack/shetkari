@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -9,15 +9,19 @@ import { AlertTriangle, Clock, Droplet, Loader2, Clipboard } from "lucide-react"
 interface ManualPumpControlProps {
   aiRecommendation: string;
   onStartIrrigation: (speed: number) => void;
+  waterSpeed: number;
+  setWaterSpeed: Dispatch<SetStateAction<number>>;
   isIrrigating: boolean;
 }
 
 export function ManualPumpControl({
   aiRecommendation,
   onStartIrrigation,
+  waterSpeed,
+  setWaterSpeed,
   isIrrigating,
 }: ManualPumpControlProps) {
-  const [waterSpeed, setWaterSpeed] = useState(5); // Default to speed 5
+  // const [waterSpeed, setWaterSpeed] = useState(5); // Default to speed 5
 
   return (
     <div className="space-y-6">

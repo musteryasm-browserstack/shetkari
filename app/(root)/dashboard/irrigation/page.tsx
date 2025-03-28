@@ -30,6 +30,8 @@ import { Switch } from "@/components/ui/switch"
 import { Progress } from "@/components/ui/progress"
 import { Label } from "@/components/ui/label"
 import { ManualPumpControl } from "./control"
+import axios from "axios"
+import { toast } from "sonner"
 
 // Sample irrigation zones data
 const irrigationZones = [
@@ -132,15 +134,26 @@ export default function IrrigationSystem() {
         }
     }
 
-    function handleStartIrrigation(speed: number): void {
+    const [waterSpeed, setWaterSpeed] = useState(5); // Default to speed 5
+    console.log(waterSpeed);
+
+    async function handleStartIrrigation(speed: number) {
         console.log(`Starting irrigation at speed: ${speed}`);
         setIsManualIrrigating(true);
 
         // Simulate irrigation process
-        setTimeout(() => {
-            console.log("Irrigation completed.");
-            setIsManualIrrigating(false);
-        }, speed * 1000); // Simulate duration based on speed
+        const response = await axios.put(`http://localhost:3000/api/update-pump`, {
+            pump: waterSpeed
+        });
+        if (response.data.status === "success") {
+            toast.success(response.data.message);
+        } else {
+            toast.error(response.data.message);
+        }
+        // setTimeout(() => {
+        //     console.log("Irrigation completed.");
+        //     setIsManualIrrigating(false);
+        // }, speed * 1000); // Simulate duration based on speed
     }
     return (
         <div className="flex min-h-screen bg-background">
@@ -298,14 +311,16 @@ export default function IrrigationSystem() {
 
                                         <TabsContent value="control" className="space-y-6">
                                             <div className="grid md:grid-cols-2 gap-8">
-                                            <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Irrigation Control</h1>
-      <ManualPumpControl
-        aiRecommendation="Watering is recommended due to low soil moisture."
-        onStartIrrigation={handleStartIrrigation}
-        isIrrigating={false}
-      />
-    </div>
+                                                <div className="p-6">
+                                                    <h1 className="text-2xl font-bold mb-6">Irrigation Control</h1>
+                                                    <ManualPumpControl
+                                                        aiRecommendation="Watering is recommended due to low soil moisture."
+                                                        onStartIrrigation={handleStartIrrigation}
+                                                        waterSpeed={waterSpeed}
+                                                        setWaterSpeed={setWaterSpeed}
+                                                        isIrrigating={false}
+                                                    />
+                                                </div>
 
                                                 <div className="space-y-6">
                                                     <div>
