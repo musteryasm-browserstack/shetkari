@@ -136,7 +136,7 @@ export default function WeatherAdvisory() {
                                             <p className="mt-2 text-lg font-medium">{weatherData.current.condition}</p>
                                             <div className="mt-4 flex items-center gap-2">
                                                 <MapPin className="h-4 w-4 text-muted-foreground" />
-                                                <span className="text-sm text-muted-foreground">Nagpur, Maharashtra</span>
+                                                <span className="text-sm text-muted-foreground">VidyaVihar, Maharashtra</span>
                                             </div>
                                         </div>
                                     </div>

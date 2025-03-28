@@ -42,7 +42,7 @@ export default function Dashboard() {
                     <div className="ml-auto flex items-center gap-2">
                         <div className="flex items-center gap-2 rounded-md bg-accent px-2 py-1 text-sm text-accent-foreground">
                             <MapPin className="h-4 w-4" />
-                            <span>Nagpur, Maharashtra</span>
+                            <span>VidyaVihar, Maharashtra</span>
                         </div>
                         <AlertTriangle className="h-5 w-5 text-yellow-500" />
                         <span className="relative flex h-3 w-3">
