@@ -1,21 +1,54 @@
+import { useState } from "react";
 import { Upload, Loader2, AlertTriangle } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
-interface ImageUploadAnalysisProps {
-  handleImageUpload: () => void;
-  isAnalyzing: boolean;
-  selectedDetection?: {
-    type: string;
-    location: string;
-    confidence: number;
-    affectedArea: string;
-    recommendation: string;
-  };
+interface DetectionResult {
+  type: string;
+  location: string;
+  confidence: number;
+  affectedArea: string;
+  recommendation: string;
 }
 
-export function ImageUploadAnalysis({ handleImageUpload, isAnalyzing, selectedDetection }: ImageUploadAnalysisProps) {
+export function ImageUploadAnalysis() {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [selectedDetection, setSelectedDetection] = useState<DetectionResult | null>(null);
+
+  // Handle File Selection
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  // Upload Image & Analyze
+  const handleImageUpload = async () => {
+    if (!selectedFile) return alert("Please select an image");
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    setIsAnalyzing(true);
+
+    try {
+      const response = await fetch("/api/analyze-image", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      setSelectedDetection(data);
+    } catch (error) {
+      console.error("Error analyzing image:", error);
+      alert("Failed to analyze the image.");
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-2xl font-bold">Upload New Image for Analysis</h2>
@@ -36,15 +69,23 @@ export function ImageUploadAnalysis({ handleImageUpload, isAnalyzing, selectedDe
               <p className="mb-4 text-sm text-muted-foreground max-w-xs">
                 Drag and drop your image here, or click to browse files. Supported formats: JPG, PNG
               </p>
-              <Button onClick={handleImageUpload}>Select Image</Button>
+              <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" id="fileInput" />
+              <label htmlFor="fileInput">
+                <Button>Select Image</Button>
+              </label>
+              {selectedFile && <p className="text-sm mt-2">{selectedFile.name}</p>}
             </div>
 
-            {isAnalyzing && (
-              <div className="flex items-center justify-center gap-2 p-4 text-center">
-                <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                <p>Analyzing image with AI... This will take a few seconds.</p>
-              </div>
-            )}
+            <Button onClick={handleImageUpload} disabled={!selectedFile || isAnalyzing}>
+              {isAnalyzing ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Analyzing...
+                </>
+              ) : (
+                "Analyze Image"
+              )}
+            </Button>
 
             {selectedDetection && (
               <Alert>

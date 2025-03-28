@@ -64,7 +64,7 @@ const regionalAlerts = [
 ]
 
 export default function PestDetection() {
-    const [activeTab, setActiveTab] = useState("current")
+    const [activeTab, setActiveTab] = useState("upload")
     const [selectedDetection, setSelectedDetection] = useState<(typeof pestDetections)[number] | null>(null)
     // const [ setIsAnalyzing] = useState(false)
 
@@ -96,8 +96,6 @@ export default function PestDetection() {
                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
                                 <TabsList>
                                     <TabsTrigger value="upload">Upload Image</TabsTrigger>
-                                    <TabsTrigger value="current">Current Detections</TabsTrigger>
-
                                     <TabsTrigger value="regional">Regional Alerts</TabsTrigger>
                                 </TabsList>
                             </div>
@@ -108,70 +106,6 @@ export default function PestDetection() {
                                         throw new Error("Function not implemented.")
                                     }} isAnalyzing={false}
                                 />
-                            </TabsContent>
-
-                            <TabsContent value="current" className="space-y-4">
-                                <div className="flex flex-col gap-4">
-                                    <h2 className="text-2xl font-bold">Current Pest & Disease Detections</h2>
-                                    <div className="grid gap-6">
-                                        {pestDetections.map((detection) => (
-                                            <Card key={detection.id} className="overflow-hidden">
-                                                <div className="flex flex-col md:flex-row">
-                                                    <Image
-                                                        src={detection.imageUrl || "/placeholder.svg"}
-                                                        alt={detection.type}
-                                                        width={15} // Explicit width
-                                                        height={10} // Explicit height
-                                                        className="w-full h-full object-cover"
-                                                    />
-                                                    <div className="flex-1 p-6">
-                                                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                                                            <div>
-                                                                <div className="flex items-center gap-2 mb-2">
-                                                                    <Badge
-                                                                        variant={
-                                                                            detection.threatLevel === "high"
-                                                                                ? "destructive"
-                                                                                : detection.threatLevel === "medium"
-                                                                                    ? "secondary"
-                                                                                    : "outline"
-                                                                        }
-                                                                    >
-                                                                        {detection.threatLevel.toUpperCase()} THREAT
-                                                                    </Badge>
-                                                                    <div className="text-sm text-muted-foreground flex items-center gap-1">
-                                                                        <Clock className="h-3 w-3" />
-                                                                        {detection.detectedOn}
-                                                                    </div>
-                                                                </div>
-                                                                <h3 className="text-xl font-bold mb-1">{detection.type}</h3>
-                                                                <p className="text-muted-foreground mb-2">{detection.location}</p>
-                                                                <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
-                                                                    <div className="flex items-center gap-2">
-                                                                        <MapPin className="h-4 w-4 text-muted-foreground" />
-                                                                        <span>Affected: {detection.affectedArea}</span>
-                                                                    </div>
-                                                                    <div className="flex items-center gap-2">
-                                                                        <AlertTriangle className="h-4 w-4 text-muted-foreground" />
-                                                                        <span>Confidence: {detection.confidence}%</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="flex flex-col gap-2 min-w-[120px]">
-                                                                <Button className="w-full" onClick={() => setSelectedDetection(detection)}>
-                                                                    View Details
-                                                                </Button>
-                                                                <Button variant="outline" className="w-full">
-                                                                    Mark Resolved
-                                                                </Button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </Card>
-                                        ))}
-                                    </div>
-                                </div>
                             </TabsContent>
 
                             <TabsContent value="regional" className="space-y-4">
