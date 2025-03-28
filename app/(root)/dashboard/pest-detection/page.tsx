@@ -101,11 +101,12 @@ export default function PestDetection() {
                             </div>
 
                             <TabsContent value="upload" className="space-y-4">
-                                <ImageUploadAnalysis
-                                    handleImageUpload={function (): void {
-                                        throw new Error("Function not implemented.")
-                                    }} isAnalyzing={false}
-                                />
+                            <ImageUploadAnalysis 
+    onAnalysisComplete={(result) => {
+      console.log("Analysis complete:", result);
+      // You can handle the result here (save to state, send to API, etc.)
+    }}
+  />
                             </TabsContent>
 
                             <TabsContent value="regional" className="space-y-4">
