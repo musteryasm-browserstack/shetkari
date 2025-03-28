@@ -1,7 +1,12 @@
 "use client"
 
+// importing from react
 import { useState } from "react";
+
+// importing from next
 import Link from "next/link";
+
+// importing shadcn components
 import {
   Card,
   CardContent,
@@ -11,7 +16,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Toggle } from "@/components/ui/toggle";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import {
   AlertTriangle,
   CheckCircle,
@@ -109,7 +115,6 @@ const translations = {
 type Language = keyof typeof translations;
 
 export default function Dashboard() {
-  const [weatherTab, setWeatherTab] = useState("today");
   const [language, setLanguage] = useState<Language>("en");
   const t = translations[language];
 
@@ -119,15 +124,14 @@ export default function Dashboard() {
       <div className="flex flex-col w-full">
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
           <h1 className="text-xl font-semibold">{t.dashboardTitle}</h1>
-          <div className="ml-auto flex items-center gap-2">
-            <Toggle
-              pressed={language === "mr"}
-              onPressedChange={(pressed) => setLanguage(pressed ? "mr" : "en")}
-              className="px-2"
-              aria-label="Toggle language"
-            >
-              {language === "en" ? "EN" : "मराठी"}
-            </Toggle>
+          <div className="ml-auto flex items-center gap-8">
+            <Tabs defaultValue="en" value={language} onValueChange={(value) => setLanguage(value as Language)}>
+              <TabsList>
+                <TabsTrigger value="en">Eng</TabsTrigger>
+                <TabsTrigger value="mr">मराठी</TabsTrigger>
+              </TabsList>
+            </Tabs>
+
             <div className="flex items-center gap-2 rounded-md bg-accent px-2 py-1 text-sm text-accent-foreground">
               <MapPin className="h-4 w-4" />
               <span>{t.location}</span>
@@ -157,7 +161,7 @@ export default function Dashboard() {
             </Card>
 
             <SoilMoistureCard language={language} />
-            
+
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">{t.pestRisk}</CardTitle>
@@ -171,7 +175,7 @@ export default function Dashboard() {
                 </p>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">{t.projectedYield}</CardTitle>

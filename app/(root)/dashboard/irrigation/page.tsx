@@ -6,14 +6,10 @@ import {
     BarChart,
     CalendarDays,
     Check,
-    Clipboard,
-    Clock,
     CloudRain,
     Droplet,
     Eye,
     FileStack,
-    HandIcon as HandWater,
-    Loader2,
     MapPin,
     RefreshCw,
     Settings,
@@ -105,18 +101,20 @@ const weatherForecast = [
 ]
 
 export default function IrrigationSystem() {
-    const [selectedZone, setSelectedZone] = useState(irrigationZones[0])
-    const [isManualIrrigating, setIsManualIrrigating] = useState(false)
-    const [manualDuration, setManualDuration] = useState(30)
+    const [selectedZone, setSelectedZone] = useState(irrigationZones[0]);
+    const [isManualIrrigating, setIsManualIrrigating] = useState(false);
+    console.log(isManualIrrigating);
+
+    // const [manualDuration, setManualDuration] = useState(30)
 
     // Manual irrigation handler
-    const handleManualIrrigation = () => {
-        setIsManualIrrigating(true)
-        // Simulate irrigation time
-        setTimeout(() => {
-            setIsManualIrrigating(false)
-        }, 3000)
-    }
+    // const handleManualIrrigation = () => {
+    //     setIsManualIrrigating(true)
+    //     // Simulate irrigation time
+    //     setTimeout(() => {
+    //         setIsManualIrrigating(false)
+    //     }, 3000)
+    // }
 
     // Status color map
     const getStatusColor = (status: string) => {

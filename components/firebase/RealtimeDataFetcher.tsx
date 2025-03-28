@@ -17,6 +17,7 @@ import {
 
 // importing constants
 import { BACKEND_URL } from "@/lib/constants";
+import { FirebaseDataType } from "@/lib/types";
 
 export function RealtimeDataFetcher() {
     const [alert, setAlert] = useState({
@@ -25,12 +26,26 @@ export function RealtimeDataFetcher() {
         alertTitle: "",
         alertDescription: ""
     });
+    const [data, setData] = useState<FirebaseDataType>({
+        deviceid: "",
+        humidity: 0.00,
+        latitude: 0.00,
+        longitude: 0.00,
+        moisture: 0.00,
+        ph: 0.00,
+        pump: 0,
+        temperature: 0,
+        ultrasonic: 0
+    });
+    console.log(data);
+
     const [open, setOpen] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${BACKEND_URL}/api/pg-dump`);
                 if (response.data.status === "success") {
+                    setData(response.data.data);
                     if (response.data.alert) {
                         setAlert({
                             alert: true,

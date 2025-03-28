@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Droplet } from "lucide-react";
+import { BACKEND_URL } from "@/lib/constants";
 
-function SoilMoistureCard() {
+function SoilMoistureCard({ language }: { language: "en" | "mr" }) {
   const [moisture, setMoisture] = useState<number | null>(null);
   const [timestamp, setTimestamp] = useState<string | null>(null);
-  const [language, setLanguage] = useState<"en" | "mr">("en"); // Default: English
 
   // Define translations within the component
   const translations = {
@@ -29,10 +29,10 @@ function SoilMoistureCard() {
   useEffect(() => {
     async function fetchMoisture() {
       try {
-        const response = await fetch("https://shetkari-beige.vercel.app/api/readings/moisture");
+        const response = await fetch(`${BACKEND_URL}/api/readings/moisture`);
         const data = await response.json();
         if (data.status === "success" && data.data.length > 0) {
-          const latestReading = data.data[data.data.length - 1];
+          const latestReading = data.data[0];
           setMoisture(parseFloat(latestReading.moisture));
           setTimestamp(new Date(latestReading.reading_time).toLocaleString());
         }

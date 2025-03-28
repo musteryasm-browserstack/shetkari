@@ -3,6 +3,9 @@
 // importing from react
 import { useState } from "react";
 
+// importing from next
+import Link from "next/link";
+
 // importing shadcn components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,10 +15,6 @@ import { Label } from "@/components/ui/label";
 import { FormMessage } from "@/components/forms/message/form-message";
 
 import { cn } from "@/lib/utils";
-import Cookies from "js-cookie";
-
-// importing server actions
-import login from "@/app/actions/user";
 
 export function LoginForm({
     className,
@@ -30,44 +29,19 @@ export function LoginForm({
     });
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        username: "",
-        password: ""
+        username: "9321012106",
+        password: "hardik@1234"
     });
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        try {
-            e.preventDefault();
-            setLoading(true);
-
-            const response = await login(formData)
-
-            if (response.type == "success") {
-                setMessage({
-                    type: "success",
-                    message: "Login Successful"
-                });
-                Cookies.set("session", response.sessionDetails?.token as string); // Expires in 1 day
-                const repairs = Cookies.get("repairs");
-                if (repairs) {
-                    window.location.href = "/home";
-                }
-                window.location.href = "/home";
-            }
-            else {
-                setMessage({
-                    type: "error",
-                    message: "Some unexpected error occured"
-                });
-            }
-            setLoading(false);
-
-        } catch (error) {
-            setLoading(false)
-            setMessage({
-                type: "error",
-                message: "Some unexpected error occured: " + error
-            });
-        }
+        e.preventDefault();
+        setLoading(true);
+        setMessage({
+            type: "success",
+            message: "Login Successful"
+        });
+        window.location.href = "/dashboard";
+        setLoading(false);
     }
 
     return (
@@ -93,6 +67,7 @@ export function LoginForm({
                         required
                     />
                 </div>
+
                 <div className="grid gap-2">
                     <div className="flex items-center">
                         <Label htmlFor="password">Password</Label>
@@ -106,8 +81,11 @@ export function LoginForm({
                         required
                     />
                 </div>
+
                 <Button type="submit" className="w-full font-bold">
-                    {loading ? "Loading..." : "Log In"}
+                    <Link href={"/dashboard"}>
+                        {loading ? "Loading..." : "Log In"}
+                    </Link>
                 </Button>
             </div>
         </form>

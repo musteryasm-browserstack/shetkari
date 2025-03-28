@@ -89,14 +89,14 @@ export default function WeatherForecast({ language }: WeatherForecastProps) {
       try {
         setLoading(true);
         setError(null);
-        
+
         const [hourlyRes, weeklyRes] = await Promise.all([
           axios.post(`${BACKEND_URL}/api/weather/hourly`, {
-            lat: "19.17548322423318", 
+            lat: "19.17548322423318",
             lon: "72.95186986886482"
           }),
           axios.post(`${BACKEND_URL}/api/weather/7days`, {
-            lat: "19.17548322423318", 
+            lat: "19.17548322423318",
             lon: "72.95186986886482"
           })
         ]);
@@ -105,7 +105,7 @@ export default function WeatherForecast({ language }: WeatherForecastProps) {
           setHourlyData(hourlyRes.data.data);
         }
         if (weeklyRes.data.status === "success") {
-          setWeeklyData(weeklyRes.data.data.map((day: any) => ({
+          setWeeklyData(weeklyRes.data.data.map((day: { date: string; temperatureMax: number }) => ({
             ...day,
             weatherCondition: day.temperatureMax > 35 ? "sunny" : "rainy"
           })));
@@ -122,7 +122,7 @@ export default function WeatherForecast({ language }: WeatherForecastProps) {
   }, [language]);
 
   const getWeatherIcon = (condition: string) => {
-    switch(condition) {
+    switch (condition) {
       case "sunny":
         return <SunMedium className="h-5 w-5 text-yellow-500" />;
       case "rainy":
@@ -133,7 +133,7 @@ export default function WeatherForecast({ language }: WeatherForecastProps) {
   };
 
   const getWeatherLabel = (condition: string) => {
-    switch(condition) {
+    switch (condition) {
       case "sunny":
         return t.weatherConditions.sunny;
       case "rainy":
@@ -236,7 +236,7 @@ export default function WeatherForecast({ language }: WeatherForecastProps) {
                 <div key={i} className="flex items-center justify-between border-b pb-2">
                   <span className="font-medium">
                     {new Date(day.date).toLocaleDateString(
-                      language === 'en' ? 'en-US' : 'mr-IN', 
+                      language === 'en' ? 'en-US' : 'mr-IN',
                       { weekday: "short" }
                     )}
                   </span>

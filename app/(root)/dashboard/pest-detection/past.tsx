@@ -1,25 +1,30 @@
 "use client"
 
+// importing from react
 import { useState, useRef } from "react";
+
+// importing from next
+import Image from "next/image";
+
 import { Upload, Loader2, AlertTriangle, X } from "lucide-react";
-import { 
-  Card, 
-  CardHeader, 
-  CardTitle, 
-  CardDescription, 
-  CardContent 
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  Alert, 
-  AlertTitle, 
-  AlertDescription 
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription
 } from "@/components/ui/alert";
 
 interface DetectionDetail {
   class: string;
   confidence: number;
-  points?: any[];
+  points?: JSON[];
 }
 
 interface DetectionResult {
@@ -49,10 +54,10 @@ export function ImageUploadAnalysis({ onAnalysisComplete }: ImageUploadAnalysisP
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setError(null);
     setSelectedDetection(null);
-    
+
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      
+
       // Validate file type
       const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
       if (!validTypes.includes(file.type)) {
@@ -67,7 +72,7 @@ export function ImageUploadAnalysis({ onAnalysisComplete }: ImageUploadAnalysisP
       }
 
       setSelectedFile(file);
-      
+
       // Create preview URL
       const reader = new FileReader();
       reader.onloadstart = () => {
@@ -109,7 +114,7 @@ export function ImageUploadAnalysis({ onAnalysisComplete }: ImageUploadAnalysisP
       }
 
       const result = await response.json();
-      
+
       if (!result.type || !result.confidence) {
         throw new Error('Invalid API response format');
       }
@@ -157,7 +162,7 @@ export function ImageUploadAnalysis({ onAnalysisComplete }: ImageUploadAnalysisP
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0];
       const event = {
@@ -181,7 +186,7 @@ export function ImageUploadAnalysis({ onAnalysisComplete }: ImageUploadAnalysisP
         <CardContent>
           <div className="grid gap-6">
             {/* File Upload Area */}
-            <div 
+            <div
               className="flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:bg-muted/50 transition-colors"
               onDragOver={handleDragOver}
               onDrop={handleDrop}
@@ -189,9 +194,11 @@ export function ImageUploadAnalysis({ onAnalysisComplete }: ImageUploadAnalysisP
             >
               {previewUrl ? (
                 <div className="relative group">
-                  <img 
-                    src={previewUrl} 
-                    alt="Preview" 
+                  <Image
+                    src={previewUrl}
+                    alt="Preview"
+                    width={100}
+                    height={100}
                     className="max-h-64 rounded-md object-contain"
                     onError={() => setError('Failed to load image preview')}
                   />
@@ -218,14 +225,14 @@ export function ImageUploadAnalysis({ onAnalysisComplete }: ImageUploadAnalysisP
                   </p>
                 </>
               )}
-              
-              <input 
+
+              <input
                 ref={fileInputRef}
-                type="file" 
-                accept="image/jpeg, image/png, image/webp" 
-                onChange={handleFileChange} 
-                className="hidden" 
-                id="fileInput" 
+                type="file"
+                accept="image/jpeg, image/png, image/webp"
+                onChange={handleFileChange}
+                className="hidden"
+                id="fileInput"
                 disabled={isAnalyzing}
               />
               <label htmlFor="fileInput" className="cursor-pointer">
@@ -246,8 +253,8 @@ export function ImageUploadAnalysis({ onAnalysisComplete }: ImageUploadAnalysisP
 
             {/* Analyze Button */}
             {selectedFile && (
-              <Button 
-                onClick={handleImageUpload} 
+              <Button
+                onClick={handleImageUpload}
                 disabled={isAnalyzing}
                 className="w-full"
               >
@@ -274,7 +281,7 @@ export function ImageUploadAnalysis({ onAnalysisComplete }: ImageUploadAnalysisP
                         {selectedDetection.type} detected in {selectedDetection.location}
                       </p>
                       <p className="text-sm mt-1">
-                        Confidence: {Math.round(selectedDetection.confidence * 100)}% | 
+                        Confidence: {Math.round(selectedDetection.confidence * 100)}% |
                         Affected Area: {selectedDetection.affectedArea}
                       </p>
                       <div className="mt-3">

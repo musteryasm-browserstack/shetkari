@@ -5,7 +5,7 @@ export async function GET(request: Request) {
     const query = `
         SELECT id, moisture, reading_time
         FROM sensor_data
-        ORDER BY reading_time, id DESC;
+        ORDER BY id DESC;
     `;
 
     try {

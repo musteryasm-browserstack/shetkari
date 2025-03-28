@@ -16,6 +16,8 @@ export function NavLogo() {
                     height={100}
                     className="w-[40px] h-fit"
                 />
+
+                <span className="text-xl font-semibold">SHETKARI</span>
             </Link>
         </>
     );

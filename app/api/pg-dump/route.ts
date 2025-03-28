@@ -31,6 +31,7 @@ export async function GET() {
             return NextResponse.json({
                 status: "success",
                 message: "",
+                data: data,
                 alert: true,
                 alertType: "alert",
                 alertTitle: "Low Water Level",

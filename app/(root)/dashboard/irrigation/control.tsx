@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -21,8 +21,6 @@ export function ManualPumpControl({
   setWaterSpeed,
   isIrrigating,
 }: ManualPumpControlProps) {
-  // const [waterSpeed, setWaterSpeed] = useState(5); // Default to speed 5
-
   return (
     <div className="space-y-6">
       {/* AI Recommendation Section */}

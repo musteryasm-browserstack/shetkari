@@ -38,6 +38,7 @@ export async function PUT(request: Request) {
 
         return Response.json({ status: "success", message: "Pump value updated successfully", pump });
     } catch (error) {
+        console.log(error);
         return Response.json({ status: "error", error: "Internal Server Error" }, { status: 500 });
     }
 

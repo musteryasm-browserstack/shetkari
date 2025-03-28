@@ -3,10 +3,7 @@
 import Image from "next/image";
 import { useState } from "react"
 import {
-    AlertTriangle,
     Bug,
-    Clock,
-    MapPin,
     ShieldAlert,
     X,
 } from "lucide-react"
@@ -18,42 +15,7 @@ import { Separator } from "@/components/ui/separator"
 import PestEducationSection from "./education"
 import { ImageUploadAnalysis } from "./past"
 
-// Sample data for pest detections
-const pestDetections = [
-    {
-        id: 1,
-        threatLevel: "high",
-        type: "Aphids",
-        location: "North Field - Wheat",
-        detectedOn: "Today, 10:23 AM",
-        affectedArea: "~0.8 hectares",
-        confidence: 94,
-        imageUrl: "/placeholder.svg?height=100&width=150",
-        recommendation: "Apply neem oil spray. Monitor daily.",
-    },
-    {
-        id: 2,
-        threatLevel: "medium",
-        type: "Powdery Mildew",
-        location: "East Field - Soybeans",
-        detectedOn: "Yesterday, 4:12 PM",
-        affectedArea: "~0.3 hectares",
-        confidence: 87,
-        imageUrl: "/placeholder.svg?height=100&width=150",
-        recommendation: "Increase airflow. Apply fungicide if spreads.",
-    },
-    {
-        id: 3,
-        threatLevel: "low",
-        type: "Corn Earworm",
-        location: "South Field - Maize",
-        detectedOn: "2 days ago",
-        affectedArea: "Isolated plants",
-        confidence: 78,
-        imageUrl: "/placeholder.svg?height=100&width=150",
-        recommendation: "Monitor. No immediate action required.",
-    },
-]
+
 
 // Sample data for pest alerts by region
 const regionalAlerts = [
@@ -64,8 +26,57 @@ const regionalAlerts = [
 ]
 
 export default function PestDetection() {
+    // Sample data for pest detections
+    const pestDetections = [
+        {
+            id: 1,
+            threatLevel: "high",
+            type: "Aphids",
+            location: "North Field - Wheat",
+            detectedOn: "Today, 10:23 AM",
+            affectedArea: "~0.8 hectares",
+            confidence: 94,
+            imageUrl: "/placeholder.svg?height=100&width=150",
+            recommendation: "Apply neem oil spray. Monitor daily.",
+        },
+        {
+            id: 2,
+            threatLevel: "medium",
+            type: "Powdery Mildew",
+            location: "East Field - Soybeans",
+            detectedOn: "Yesterday, 4:12 PM",
+            affectedArea: "~0.3 hectares",
+            confidence: 87,
+            imageUrl: "/placeholder.svg?height=100&width=150",
+            recommendation: "Increase airflow. Apply fungicide if spreads.",
+        },
+        {
+            id: 3,
+            threatLevel: "low",
+            type: "Corn Earworm",
+            location: "South Field - Maize",
+            detectedOn: "2 days ago",
+            affectedArea: "Isolated plants",
+            confidence: 78,
+            imageUrl: "/placeholder.svg?height=100&width=150",
+            recommendation: "Monitor. No immediate action required.",
+        },
+    ];
+    console.log(pestDetections);
+
+    type pestDetectionType = {
+        id: number;
+        threatLevel: string;
+        type: string;
+        location: string;
+        detectedOn: string;
+        affectedArea: string;
+        confidence: number;
+        imageUrl: string;
+        recommendation: string;
+    };
     const [activeTab, setActiveTab] = useState("upload")
-    const [selectedDetection, setSelectedDetection] = useState<(typeof pestDetections)[number] | null>(null)
+    const [selectedDetection, setSelectedDetection] = useState<pestDetectionType | null>(null);
     // const [ setIsAnalyzing] = useState(false)
 
     // const handleImageUpload = () => {
@@ -101,12 +112,12 @@ export default function PestDetection() {
                             </div>
 
                             <TabsContent value="upload" className="space-y-4">
-                            <ImageUploadAnalysis 
-    onAnalysisComplete={(result) => {
-      console.log("Analysis complete:", result);
-      // You can handle the result here (save to state, send to API, etc.)
-    }}
-  />
+                                <ImageUploadAnalysis
+                                    onAnalysisComplete={(result) => {
+                                        console.log("Analysis complete:", result);
+                                        // You can handle the result here (save to state, send to API, etc.)
+                                    }}
+                                />
                             </TabsContent>
 
                             <TabsContent value="regional" className="space-y-4">
@@ -175,7 +186,7 @@ export default function PestDetection() {
                                 className="border-l-4"
                                 style={{
                                     borderLeftColor:
-                                        selectedDetection.threatLevel === "high"
+                                        selectedDetection?.threatLevel === "high"
                                             ? "rgb(239, 68, 68)"
                                             : selectedDetection.threatLevel === "medium"
                                                 ? "rgb(234, 179, 8)"

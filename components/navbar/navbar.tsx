@@ -1,3 +1,6 @@
+// importing from next
+import Link from "next/link";
+
 // importing shadcn components
 import { Button } from "@/components/ui/button";
 
@@ -36,7 +39,7 @@ export async function Navbar() {
     return (
         <>
             <nav className="w-full bg-muted p-2 flex justify-between items-center border rounded-b-2xl fixed h-16 z-50">
-                <div>
+                <div className="flex gap-4">
                     <GoBack />
                     <NavLogo />
                 </div>
@@ -50,6 +53,11 @@ export async function Navbar() {
                     avatarEmail={session.user.username}
                     avatarImage={""}
                 /> */}
+                <Button>
+                    <Link href={"/login"}>
+                        Farmer Login
+                    </Link>
+                </Button>
             </nav>
         </>
     );
