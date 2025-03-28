@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
+import { OrbitControls as OrbitControlsImpl } from "three-stdlib" // Import OrbitControls type
 
 // Define types for our farm data
 type FarmData = {
@@ -94,7 +95,7 @@ function FarmPlot({ position, size, color, selected, onClick }: FarmPlotProps) {
 }
 
 function FarmVisualization({ farms, selectedPlot, setSelectedPlot }: FarmVisualizationProps) {
-  const controlsRef = useRef<any>(null)
+  const controlsRef = useRef<OrbitControlsImpl | null>(null) // Specify the correct type for the ref
 
   const getColorForHealth = (health: number) => {
     if (health > 90) return "#22c55e" // Green
