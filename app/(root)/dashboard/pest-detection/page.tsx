@@ -117,13 +117,13 @@ export default function PestDetection() {
                                         {pestDetections.map((detection) => (
                                             <Card key={detection.id} className="overflow-hidden">
                                                 <div className="flex flex-col md:flex-row">
-                                                    <div className="w-full md:w-[150px] h-[100px] bg-muted">
-                                                        <Image
-                                                            src={detection.imageUrl || "/placeholder.svg"}
-                                                            alt={detection.type}
-                                                            className="w-full h-full object-cover"
-                                                        />
-                                                    </div>
+                                                    <Image
+                                                        src={detection.imageUrl || "/placeholder.svg"}
+                                                        alt={detection.type}
+                                                        width={15} // Explicit width
+                                                        height={10} // Explicit height
+                                                        className="w-full h-full object-cover"
+                                                    />
                                                     <div className="flex-1 p-6">
                                                         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                                                             <div>

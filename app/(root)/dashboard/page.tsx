@@ -1,7 +1,7 @@
 "use client"
 
 // importing from react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // importing from next
 import Link from "next/link";
@@ -27,6 +27,7 @@ import {
 import {
     AlertTriangle,
     BarChart3,
+    Car,
     CheckCircle,
     CloudRain,
     Droplet,
@@ -36,6 +37,8 @@ import {
     SunMedium,
     TrendingUp,
 } from "lucide-react";
+import { SoilMoistureCard } from "./moistureCard";
+import WeatherForecast from "./weather";
 
 export default function Dashboard() {
     const [weatherTab, setWeatherTab] = useState("today")
@@ -72,17 +75,8 @@ export default function Dashboard() {
                                 <p className="text-xs text-muted-foreground mt-2">+4% from last week</p>
                             </CardContent>
                         </Card>
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">Soil Moisture</CardTitle>
-                                <Droplet className="h-4 w-4 text-blue-500" />
-                            </CardHeader>
-                            <CardContent>
-                                <div className="text-2xl font-bold">68%</div>
-                                <Progress value={68} className="h-2 mt-2" />
-                                <p className="text-xs text-muted-foreground mt-2">Optimal range: 60-75%</p>
-                            </CardContent>
-                        </Card>
+                
+                            <SoilMoistureCard></SoilMoistureCard>
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">Pest Risk Level</CardTitle>
@@ -147,86 +141,9 @@ export default function Dashboard() {
                                 </div>
                             </CardContent>
                         </Card>
-                        <Card className="lg:col-span-3">
-                            <CardHeader>
-                                <CardTitle>Weather Forecast</CardTitle>
-                                <CardDescription>Localized predictions for your farm</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <Tabs defaultValue="today" value={weatherTab} onValueChange={setWeatherTab}>
-                                    <TabsList className="grid w-full grid-cols-3">
-                                        <TabsTrigger value="today">Today</TabsTrigger>
-                                        <TabsTrigger value="week">This Week</TabsTrigger>
-                                        <TabsTrigger value="month">Monthly</TabsTrigger>
-                                    </TabsList>
-                                    <TabsContent value="today" className="space-y-4 mt-4">
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex flex-col">
-                                                <span className="text-4xl font-bold">32°C</span>
-                                                <span className="text-muted-foreground">Feels like 34°C</span>
-                                            </div>
-                                            <div className="text-right">
-                                                <SunMedium className="h-10 w-10 text-yellow-500 inline-block" />
-                                                <div className="text-muted-foreground">Mostly Sunny</div>
-                                            </div>
-                                        </div>
-                                        <div className="grid grid-cols-3 gap-2 pt-4 border-t">
-                                            <div className="text-center">
-                                                <div className="text-sm font-medium">Humidity</div>
-                                                <div className="text-2xl font-semibold">65%</div>
-                                            </div>
-                                            <div className="text-center">
-                                                <div className="text-sm font-medium">Wind</div>
-                                                <div className="text-2xl font-semibold">8 km/h</div>
-                                            </div>
-                                            <div className="text-center">
-                                                <div className="text-sm font-medium">Rain</div>
-                                                <div className="text-2xl font-semibold">10%</div>
-                                            </div>
-                                        </div>
-                                        <div className="pt-4 border-t">
-                                            <div className="text-sm font-medium mb-2">Hourly Forecast</div>
-                                            <div className="flex gap-2 overflow-x-auto pb-2">
-                                                {["9AM", "12PM", "3PM", "6PM", "9PM"].map((time, i) => (
-                                                    <div key={i} className="flex flex-col items-center p-2 min-w-[70px] rounded-md border">
-                                                        <span className="text-sm">{time}</span>
-                                                        <SunMedium className="h-5 w-5 my-1 text-yellow-500" />
-                                                        <span className="text-sm font-semibold">{30 + i}°C</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </TabsContent>
-                                    <TabsContent value="week" className="mt-4">
-                                        <div className="space-y-4">
-                                            {["Mon", "Tue", "Wed", "Thu", "Fri"].map((day, i) => (
-                                                <div key={i} className="flex items-center justify-between border-b pb-2">
-                                                    <span className="font-medium">{day}</span>
-                                                    <div className="flex items-center gap-2">
-                                                        {i % 2 === 0 ? (
-                                                            <SunMedium className="h-5 w-5 text-yellow-500" />
-                                                        ) : (
-                                                            <CloudRain className="h-5 w-5 text-blue-500" />
-                                                        )}
-                                                        <span>{i % 2 === 0 ? "Sunny" : "Light Rain"}</span>
-                                                    </div>
-                                                    <span className="font-semibold">{32 - i}°C</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </TabsContent>
-                                    <TabsContent value="month" className="mt-4">
-                                        <div className="h-[220px] flex items-center justify-center border rounded-md">
-                                            <BarChart3 className="h-16 w-16 text-muted-foreground/60" />
-                                            <div className="ml-4 text-center">
-                                                <p className="text-muted-foreground">Monthly precipitation forecast</p>
-                                                <p className="text-sm text-muted-foreground">85mm expected this month</p>
-                                            </div>
-                                        </div>
-                                    </TabsContent>
-                                </Tabs>
-                            </CardContent>
-                        </Card>
+                       <Card>
+                        <WeatherForecast></WeatherForecast>
+                       </Card>
                     </div>
 
                     <div className="grid gap-4 mt-4 md:grid-cols-2 lg:grid-cols-3">

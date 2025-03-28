@@ -29,6 +29,7 @@ import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
 import { Progress } from "@/components/ui/progress"
 import { Label } from "@/components/ui/label"
+import { ManualPumpControl } from "./control"
 
 // Sample irrigation zones data
 const irrigationZones = [
@@ -131,6 +132,16 @@ export default function IrrigationSystem() {
         }
     }
 
+    function handleStartIrrigation(speed: number): void {
+        console.log(`Starting irrigation at speed: ${speed}`);
+        setIsManualIrrigating(true);
+
+        // Simulate irrigation process
+        setTimeout(() => {
+            console.log("Irrigation completed.");
+            setIsManualIrrigating(false);
+        }, speed * 1000); // Simulate duration based on speed
+    }
     return (
         <div className="flex min-h-screen bg-background">
             {/* Main Content */}
@@ -287,75 +298,14 @@ export default function IrrigationSystem() {
 
                                         <TabsContent value="control" className="space-y-6">
                                             <div className="grid md:grid-cols-2 gap-8">
-                                                <div className="space-y-6">
-                                                    <div>
-                                                        <h3 className="text-lg font-semibold mb-4">AI Recommendation</h3>
-                                                        <div className="flex gap-3 p-4 rounded-lg bg-muted">
-                                                            <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
-                                                            <div>
-                                                                <p>{selectedZone.aiRecommendation}</p>
-                                                                <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
-                                                                    <Clock className="h-4 w-4" />
-                                                                    <span>Generated 30 minutes ago</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div>
-                                                        <h3 className="text-lg font-semibold mb-4">Manual Control</h3>
-                                                        <div className="space-y-4">
-                                                            <div className="flex items-center justify-between">
-                                                                <Label htmlFor="manual-mode" className="flex items-center gap-2">
-                                                                    <HandWater className="h-4 w-4" />
-                                                                    <span>Manual override</span>
-                                                                </Label>
-                                                                <Switch id="manual-mode" />
-                                                            </div>
-
-                                                            <div className="space-y-3">
-                                                                <Label>Duration: {manualDuration} minutes</Label>
-                                                                <Slider
-                                                                    value={[manualDuration]}
-                                                                    min={5}
-                                                                    max={120}
-                                                                    step={5}
-                                                                    onValueChange={(value) => setManualDuration(value[0])}
-                                                                />
-                                                                <div className="flex justify-between text-xs text-muted-foreground">
-                                                                    <span>5 min</span>
-                                                                    <span>30 min</span>
-                                                                    <span>60 min</span>
-                                                                    <span>120 min</span>
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="flex gap-2">
-                                                                <Button
-                                                                    className="flex-1"
-                                                                    onClick={handleManualIrrigation}
-                                                                    disabled={isManualIrrigating}
-                                                                >
-                                                                    {isManualIrrigating ? (
-                                                                        <>
-                                                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                                                            Irrigating...
-                                                                        </>
-                                                                    ) : (
-                                                                        <>
-                                                                            <Droplet className="mr-2 h-4 w-4" />
-                                                                            Start Irrigation
-                                                                        </>
-                                                                    )}
-                                                                </Button>
-                                                                <Button variant="outline" className="flex-1">
-                                                                    <Clipboard className="mr-2 h-4 w-4" />
-                                                                    Save as Schedule
-                                                                </Button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Irrigation Control</h1>
+      <ManualPumpControl
+        aiRecommendation="Watering is recommended due to low soil moisture."
+        onStartIrrigation={handleStartIrrigation}
+        isIrrigating={false}
+      />
+    </div>
 
                                                 <div className="space-y-6">
                                                     <div>
