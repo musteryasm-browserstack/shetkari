@@ -16,25 +16,15 @@ import {
     CardTitle
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger
-} from "@/components/ui/tabs";
 
 // importing icons
 import {
     AlertTriangle,
-    BarChart3,
-    Car,
     CheckCircle,
-    CloudRain,
     Droplet,
     Leaf,
     MapPin,
     ShieldAlert,
-    SunMedium,
     TrendingUp,
 } from "lucide-react";
 import { SoilMoistureCard } from "./moistureCard";
@@ -75,8 +65,8 @@ export default function Dashboard() {
                                 <p className="text-xs text-muted-foreground mt-2">+4% from last week</p>
                             </CardContent>
                         </Card>
-                
-                            <SoilMoistureCard></SoilMoistureCard>
+
+                        <SoilMoistureCard />
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">Pest Risk Level</CardTitle>
@@ -141,9 +131,8 @@ export default function Dashboard() {
                                 </div>
                             </CardContent>
                         </Card>
-                       <Card>
-                        <WeatherForecast></WeatherForecast>
-                       </Card>
+
+                        <WeatherForecast />
                     </div>
 
                     <div className="grid gap-4 mt-4 md:grid-cols-2 lg:grid-cols-3">

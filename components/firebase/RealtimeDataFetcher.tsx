@@ -1,14 +1,49 @@
 "use client"; // If using Next.js App Router
 
-import { useEffect } from "react";
+// importing from react
 import axios from "axios";
-import { PG_DUMP_URL } from "@/lib/constants";
+import { useEffect, useState } from "react";
+
+// importing shadnc components
+import { Button } from "../ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+
+// importing constants
+import { BACKEND_URL } from "@/lib/constants";
 
 export function RealtimeDataFetcher() {
+    const [alert, setAlert] = useState({
+        alert: false,
+        alertType: "",
+        alertTitle: "",
+        alertDescription: ""
+    });
+    const [open, setOpen] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(PG_DUMP_URL);
+                const response = await axios.get(`${BACKEND_URL}/api/pg-dump`);
+                if (response.data.status === "success") {
+                    if (response.data.alert) {
+                        setAlert({
+                            alert: true,
+                            alertType: response.data.alertType,
+                            alertTitle: response.data.alertTitle,
+                            alertDescription: response.data.alertDescription
+                        });
+                        setOpen(true);
+                    }
+                    else {
+                        setOpen(false);
+                    }
+                }
                 console.log("Fetched Data:", response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -20,5 +55,23 @@ export function RealtimeDataFetcher() {
         return () => clearInterval(interval);
     }, []);
 
-    return <div></div>;
+    return (
+        <>
+            {alert && (
+                <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogTrigger asChild>
+                        <Button variant="outline">Edit Profile</Button>
+                    </DialogTrigger>
+                    <DialogContent className={`sm:max-w-[425px] ${alert.alertType === "alert" ? "border-destructive text-destructive" : "bg-yellow-100"}`}>
+                        <DialogHeader>
+                            <DialogTitle>{alert.alertTitle}</DialogTitle>
+                            <DialogDescription>
+                                {alert.alertDescription}
+                            </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                </Dialog>
+            )}
+        </>
+    );
 };

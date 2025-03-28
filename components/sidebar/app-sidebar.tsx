@@ -29,8 +29,8 @@ import { ModeToggle } from "../navbar/toggle-theme";
 // This is sample data.
 const data = {
     user: {
-        name: "shadcn",
-        email: "m@example.com",
+        name: "Team Obviously",
+        email: "team@obviously.com",
         avatar: "/avatars/shadcn.jpg",
     },
     navMain: [

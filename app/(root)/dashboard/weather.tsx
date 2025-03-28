@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { SunMedium, CloudRain, BarChart3 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { BACKEND_URL } from "@/lib/constants";
+import axios from "axios";
 
 export default function WeatherForecast() {
     const [weatherTab, setWeatherTab] = useState("today");
@@ -26,17 +28,17 @@ export default function WeatherForecast() {
     useEffect(() => {
         const fetchWeatherData = async () => {
             try {
-                const hourlyRes = await fetch("https://shetkari-beige.vercel.app/api/weather/hourly");
-                const weeklyRes = await fetch("https://shetkari-beige.vercel.app/api/weather/7days");
-
-                const hourlyJson = await hourlyRes.json();
-                const weeklyJson = await weeklyRes.json();
-
-                if (hourlyJson.status === "success" && weeklyJson.status === "success") {
-                    setHourlyData(hourlyJson.data.slice(0, 5)); // Show first 5 hours
-                    setWeeklyData(weeklyJson.data);
-                } else {
-                    throw new Error("Failed to fetch weather data");
+                const hourlyRes = await axios.post(`${BACKEND_URL}/api/weather/hourly`, {
+                    lat: "19.17548322423318", lon: "72.95186986886482"
+                });
+                const weeklyRes = await axios.post(`${BACKEND_URL}/api/weather/7days`, {
+                    lat: "19.17548322423318", lon: "72.95186986886482"
+                });
+                if (hourlyRes.data.status === "success") {
+                    setHourlyData(hourlyRes.data.data);
+                }
+                if (weeklyRes.data.status === "success") {
+                    setWeeklyData(weeklyRes.data.data);
                 }
             } catch (err) {
                 setError((err as Error).message);
@@ -57,7 +59,7 @@ export default function WeatherForecast() {
     }
 
     return (
-        <Card className="lg:col-span-3">
+        <Card className="lg:col-span-3 w-full">
             <CardHeader>
                 <CardTitle>Weather Forecast</CardTitle>
                 <CardDescription>Localized predictions for your farm</CardDescription>

@@ -6,12 +6,14 @@ export type WeatherForecast = {
     rain: number;
 };
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
+    const body = await request.json();
+    const { lat, lon } = body;
     console.log(request);
     try {
-        const lat = "19.07348";
-        const long = "72.90143";
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,windspeed_10m&forecast_days=1&timezone=auto`;
+        // const lat = "19.07348";
+        // const long = "72.90143";
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,windspeed_10m&forecast_days=1&timezone=auto`;
 
         const response = await fetch(url);
         const data = await response.json();

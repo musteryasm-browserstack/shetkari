@@ -26,7 +26,30 @@ export async function GET() {
         ]);
 
         console.log("Inserted Data:", rows);
-        return NextResponse.json(rows);
+
+        if (data.ultrasonic <= 200) {
+            return NextResponse.json({
+                status: "success",
+                message: "",
+                alert: true,
+                alertType: "alert",
+                alertTitle: "Low Water Level",
+                alertDescription: "Water level reached below 200ml"
+            });
+        }
+        else if (data.temperature >= 60) {
+            return NextResponse.json({
+                status: "success",
+                message: "",
+                alert: true,
+                alertType: "alert",
+                alertTitle: "Unusually high temperature observed",
+                alertDescription: "Temperature Recorded: " + data.temperature + "°C"
+            });
+        }
+        else {
+            return NextResponse.json(rows);
+        }
     } catch (error) {
         console.error("Error fetching data:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
