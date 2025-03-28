@@ -1,0 +1,33 @@
+{
+    "name": "Shetkari",
+    "short_name": "Shetkari",
+    "description": "Farmer work from home application",
+    "theme_color": "#d51a21",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "/icons/shetkari144.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "/icons/shetkari192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/icons/shetkari256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "/icons/shetkari512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
